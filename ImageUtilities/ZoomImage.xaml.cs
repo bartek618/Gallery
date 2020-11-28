@@ -22,8 +22,8 @@ namespace ImageUtilities
     {
         public Point InitialMousePosition { get; private set; }
         public TranslateTransform InitialImagePosition { get; private set; }
-        private ZoomHandler _zoomHandler;
-        private PanHandler _panHandler;
+        private readonly ZoomHandler _zoomHandler;
+        private readonly PanHandler _panHandler;
         public ZoomImage()
         {
             InitializeComponent();

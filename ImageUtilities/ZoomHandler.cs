@@ -10,10 +10,10 @@ namespace ImageUtilities
 {
     public class ZoomHandler
     {
-        private Border _border;
-        private Image _image;
-        public ScaleTransform ScaleTranform { get; private set; }
-        public TranslateTransform TranslateTransform { get; private set; }
+        private readonly Border _border;
+        private readonly Image _image;
+        private readonly ScaleTransform _scaleTranform;
+        private readonly TranslateTransform _translateTransform;
         private double ScaleX
         {
             get { return ScaleTranform.ScaleX; }
@@ -51,11 +51,11 @@ namespace ImageUtilities
                 double MaxTranslation = (_border.ActualWidth + _image.ActualWidth * ScaleX) / 2 - 50;
                 if (Math.Abs(value) < MaxTranslation)
                 {
-                    TranslateTransform.X = value;
+                    _translateTransform.X = value;
                 }
                 else
                 {
-                    TranslateTransform.X = Math.Sign(value) * MaxTranslation;
+                    _translateTransform.X = Math.Sign(value) * MaxTranslation;
                 }
             }
         }
@@ -66,23 +66,26 @@ namespace ImageUtilities
                 double MaxTranslation = (_border.ActualHeight + _image.ActualHeight * ScaleY) / 2 - 50;
                 if (Math.Abs(value) < MaxTranslation)
                 {
-                    TranslateTransform.Y = value;
+                    _translateTransform.Y = value;
                 }
                 else
                 {
-                    TranslateTransform.Y = Math.Sign(value) * MaxTranslation;
+                    _translateTransform.Y = Math.Sign(value) * MaxTranslation;
                 }
             }
         }
+
+        public ScaleTransform ScaleTranform => _scaleTranform;
+
         public ZoomHandler(Border border, Image image)
         {
             _border = border;
             _image = image;
 
-            ScaleTranform = (ScaleTransform)((TransformGroup)image.RenderTransform)
+            _scaleTranform = (ScaleTransform)((TransformGroup)image.RenderTransform)
                 .Children.First(tr => tr is ScaleTransform);
 
-            TranslateTransform = (TranslateTransform)((TransformGroup)image.RenderTransform)
+            _translateTransform = (TranslateTransform)((TransformGroup)image.RenderTransform)
                 .Children.First(tr => tr is TranslateTransform);
         }
         public void Zoom(double zoomCoefficient)
@@ -91,15 +94,15 @@ namespace ImageUtilities
             ScaleY *= zoomCoefficient;
 
         }
-        private void ResetTranslateTransformation()
-        {
-            TranslateX = 0;
-            TranslateY = 0;
-        }
         public void ResetZoom()
         {
             ResetScaleTransformation();
             ResetTranslateTransformation();
+        }
+        private void ResetTranslateTransformation()
+        {
+            TranslateX = 0;
+            TranslateY = 0;
         }
         private void ResetScaleTransformation()
         {

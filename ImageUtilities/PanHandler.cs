@@ -12,79 +12,79 @@ namespace ImageUtilities
 {
     class PanHandler
     {
-        public ScaleTransform ScaleTranform { get; private set; }
-        public TranslateTransform TranslateTransform { get; private set; }
-        private Border _border;
-        private Image _image;
-        public Point InitialMousePosition { get; private set; }
-        public TranslateTransform InitialImagePosition { get; private set; }
-        public PanHandler(Border border, Image image)
-        {
-            _border = border;
-            _image = image;
-
-            ScaleTranform = (ScaleTransform)((TransformGroup)image.RenderTransform)
-    .Children.First(tr => tr is ScaleTransform);
-
-            TranslateTransform = (TranslateTransform)((TransformGroup)image.RenderTransform)
-                .Children.First(tr => tr is TranslateTransform);
-        }
+        private readonly Border _border;
+        private readonly Image _image;
+        public ScaleTransform _scaleTranform;
+        public TranslateTransform _translateTransform;
         private double TranslateX
         {
-            get { return TranslateTransform.X; }
+            get { return _translateTransform.X; }
             set
             {
                 double MaxTranslation = (_border.ActualWidth + _image.ActualWidth * ScaleX) / 2 - 50;
                 if (Math.Abs(value) < MaxTranslation)
                 {
-                    TranslateTransform.X = value;
+                    _translateTransform.X = value;
                 }
                 else
                 {
-                    TranslateTransform.X = Math.Sign(value) * MaxTranslation;
+                    _translateTransform.X = Math.Sign(value) * MaxTranslation;
                 }
             }
         }
         private double TranslateY
         {
-            get { return TranslateTransform.Y; }
+            get { return _translateTransform.Y; }
             set
             {
                 double MaxTranslation = (_border.ActualHeight + _image.ActualHeight * ScaleY) / 2 - 50;
                 if (Math.Abs(value) < MaxTranslation)
                 {
-                    TranslateTransform.Y = value;
+                    _translateTransform.Y = value;
                 }
                 else
                 {
-                    TranslateTransform.Y = Math.Sign(value) * MaxTranslation;
+                    _translateTransform.Y = Math.Sign(value) * MaxTranslation;
                 }
             }
         }
         private double ScaleX
         {
-            get { return ScaleTranform.ScaleX; }
+            get { return _scaleTranform.ScaleX; }
  
         }
         private double ScaleY
         {
-            get { return ScaleTranform.ScaleY; }
+            get { return _scaleTranform.ScaleY; }
+        }
+        private Point _initialMousePosition;
+        private TranslateTransform _initialImagePosition;
+        public PanHandler(Border border, Image image)
+        {
+            _border = border;
+            _image = image;
+
+            _scaleTranform = (ScaleTransform)((TransformGroup)image.RenderTransform)
+    .Children.First(tr => tr is ScaleTransform);
+
+            _translateTransform = (TranslateTransform)((TransformGroup)image.RenderTransform)
+                .Children.First(tr => tr is TranslateTransform);
         }
         public void StartPan(MouseButtonEventArgs e)
         {
             _image.CaptureMouse();
 
-            InitialMousePosition = e.GetPosition(_border);
+            _initialMousePosition = e.GetPosition(_border);
 
-            InitialImagePosition = new TranslateTransform(TranslateX, TranslateY);
+            _initialImagePosition = new TranslateTransform(TranslateX, TranslateY);
         }
         public void Pan(MouseEventArgs e)
         {
             if (_image.IsMouseCaptured)
             {
-                Vector v = InitialMousePosition - e.GetPosition(_border);
-                TranslateX = InitialImagePosition.X - v.X;
-                TranslateY = InitialImagePosition.Y - v.Y;
+                Vector v = _initialMousePosition - e.GetPosition(_border);
+                TranslateX = _initialImagePosition.X - v.X;
+                TranslateY = _initialImagePosition.Y - v.Y;
             }
         }
         public void EndPan()
