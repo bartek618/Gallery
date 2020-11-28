@@ -32,17 +32,14 @@ namespace Gallery
             DataContext = this;
             InitializeComponent();
         }
-
         private void PlusButton_Click(object sender, RoutedEventArgs e)
         {
             MainImage.Zoom(1.2);
         }
-
         private void MinusButton_Click(object sender, RoutedEventArgs e)
         {
             MainImage.Zoom(0.8);
         }
-
         private void LoadButton_Click(object sender, RoutedEventArgs e)
         {
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
@@ -61,6 +58,8 @@ namespace Gallery
         private void Images_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             MainImage.LoadImage((e.AddedItems[0] as Item).Value);
+
+            MainImage.Reset();
         }
     }
     public class Item

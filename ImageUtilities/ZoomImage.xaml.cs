@@ -48,6 +48,10 @@ namespace ImageUtilities
         {
             _zoomHandler.Zoom(zoomCoefficient);
         }
+        public void Reset()
+        {
+            _zoomHandler.ResetZoom();
+        }
         private void ZImage_MouseMove(object sender, MouseEventArgs e)
         {
             _panHandler.Pan(e);
