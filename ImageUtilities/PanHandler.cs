@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace ImageUtilities
 {
-    class PanHandler
+    public class PanHandler
     {
         private readonly Border _border;
         private readonly Image _image;
@@ -59,30 +59,30 @@ namespace ImageUtilities
         }
         private Point _initialMousePosition;
         private TranslateTransform _initialImagePosition;
-        public PanHandler(Border border, Image image)
+        public PanHandler(Border border)
         {
             _border = border;
-            _image = image;
+            _image = (Image)border.Child;
 
-            _scaleTranform = (ScaleTransform)((TransformGroup)image.RenderTransform)
-    .Children.First(tr => tr is ScaleTransform);
+            _scaleTranform = (ScaleTransform)((TransformGroup)_image.RenderTransform)
+                .Children.First(tr => tr is ScaleTransform);
 
-            _translateTransform = (TranslateTransform)((TransformGroup)image.RenderTransform)
+            _translateTransform = (TranslateTransform)((TransformGroup)_image.RenderTransform)
                 .Children.First(tr => tr is TranslateTransform);
         }
-        public void StartPan(MouseButtonEventArgs e)
+        public void StartPan(Point mousePostion)
         {
             _image.CaptureMouse();
 
-            _initialMousePosition = e.GetPosition(_border);
+            _initialMousePosition = mousePostion;
 
             _initialImagePosition = new TranslateTransform(TranslateX, TranslateY);
         }
-        public void Pan(MouseEventArgs e)
+        public void Pan(Point mousePostion)
         {
             if (_image.IsMouseCaptured)
             {
-                Vector v = _initialMousePosition - e.GetPosition(_border);
+                Vector v = _initialMousePosition - mousePostion;
                 TranslateX = _initialImagePosition.X - v.X;
                 TranslateY = _initialImagePosition.Y - v.Y;
             }

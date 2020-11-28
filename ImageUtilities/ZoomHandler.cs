@@ -77,15 +77,15 @@ namespace ImageUtilities
 
         public ScaleTransform ScaleTranform => _scaleTranform;
 
-        public ZoomHandler(Border border, Image image)
+        public ZoomHandler(Border border)
         {
             _border = border;
-            _image = image;
+            _image = (Image)border.Child;
 
-            _scaleTranform = (ScaleTransform)((TransformGroup)image.RenderTransform)
+            _scaleTranform = (ScaleTransform)((TransformGroup)_image.RenderTransform)
                 .Children.First(tr => tr is ScaleTransform);
 
-            _translateTransform = (TranslateTransform)((TransformGroup)image.RenderTransform)
+            _translateTransform = (TranslateTransform)((TransformGroup)_image.RenderTransform)
                 .Children.First(tr => tr is TranslateTransform);
         }
         public void Zoom(double zoomCoefficient)

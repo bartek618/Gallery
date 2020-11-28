@@ -33,8 +33,8 @@ namespace ImageUtilities
             group.Children.Add(new TranslateTransform());
             ZImage.RenderTransform = group;
 
-            _zoomHandler = new ZoomHandler(ZBorder, ZImage);
-            _panHandler = new PanHandler(ZBorder, ZImage);
+            _zoomHandler = new ZoomHandler(ZBorder);
+            _panHandler = new PanHandler(ZBorder);
 
             ZImage.MouseDown += ZImage_MouseDown;
             ZImage.MouseUp += ZImage_MouseUp;
@@ -54,7 +54,7 @@ namespace ImageUtilities
         }
         private void ZImage_MouseMove(object sender, MouseEventArgs e)
         {
-            _panHandler.Pan(e);
+            _panHandler.Pan(e.GetPosition(ZBorder));
         }
         private void ZImage_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -62,7 +62,7 @@ namespace ImageUtilities
         }
         private void ZImage_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            _panHandler.StartPan(e);
+            _panHandler.StartPan(e.GetPosition(ZBorder));
         }
 
 
