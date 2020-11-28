@@ -57,9 +57,12 @@ namespace Gallery
         }
         private void Images_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MainImage.LoadImage((e.AddedItems[0] as Item).Value);
+            if (e.AddedItems.Count > 0)
+            {
+                MainImage.LoadImage((e.AddedItems[0] as Item).Value);
 
-            MainImage.Reset();
+                MainImage.Reset();
+            }
         }
     }
     public class Item
