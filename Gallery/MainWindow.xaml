@@ -24,10 +24,10 @@
             <Button Grid.Row="2" Content="-" Click="MinusButton_Click"/>
         </Grid>
         <imageutilities:ZoomImage x:Name="MainImage" Grid.Column="1"/>
-        <ListView x:Name="Images" ItemsSource="{Binding List}" SelectionChanged="Images_SelectionChanged" Grid.Column="2">
+        <ListView x:Name="Images" ItemsSource="{Binding PhotosHandler.Photos}" SelectionChanged="Images_SelectionChanged" Grid.Column="2">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                        <Image Width="200" Height="200" Source="{Binding Value}"/>
+                        <Image Width="200" Height="200" Source="{Binding Path}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

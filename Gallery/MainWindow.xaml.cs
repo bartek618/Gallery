@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using GalleryClassLibrary;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,7 +27,9 @@ namespace Gallery
     /// </summary>
     public partial class MainWindow : Window
     {
-        public ObservableCollection<Item> List { get; set; } = new ObservableCollection<Item>();
+        public ObservableCollection<Photo> List { get; set; } = new ObservableCollection<Photo>();
+        public PhotosHandler PhotosHandler { get; set; } = new PhotosHandler();
+
         public MainWindow()
         {
             DataContext = this;
@@ -46,28 +49,17 @@ namespace Gallery
 
             if (folderBrowserDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                List<string> _list = Directory.GetFiles(folderBrowserDialog.SelectedPath).ToList();
-
-                List.Clear();
-                foreach (string item in _list)
-                {
-                    List.Add(new Item { Value = item });
-                }
+                PhotosHandler.LoadPhotos(Directory.GetFiles(folderBrowserDialog.SelectedPath));
             }
         }
         private void Images_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count > 0)
             {
-                MainImage.LoadImage((e.AddedItems[0] as Item).Value);
+                MainImage.LoadImage((e.AddedItems[0] as Photo).Path);
 
                 MainImage.Reset();
             }
         }
     }
-    public class Item
-    {
-        public string Value { get; set; }
-    }
-
 }

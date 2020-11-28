@@ -96,6 +96,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GalleryClassLibrary\GalleryClassLibrary.csproj">
+      <Project>{9878c819-bff4-4bd5-b8ca-b45d6ce9135d}</Project>
+      <Name>GalleryClassLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ImageUtilities\ImageUtilities.csproj">
       <Project>{57121ca7-443d-437b-9be8-c480ac6300a7}</Project>
       <Name>ImageUtilities</Name>
