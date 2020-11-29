@@ -7,27 +7,27 @@
         xmlns:imageutilities="clr-namespace:ImageUtilities;assembly=ImageUtilities"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="100"/>
-            </Grid.RowDefinitions>
-            <Button Grid.Row="0" Content="Load" Click="LoadButton_Click"/>
-            <Button Grid.Row="1" Content="+" Click="PlusButton_Click"/>
-            <Button Grid.Row="2" Content="-" Click="MinusButton_Click"/>
-        </Grid>
+        
+        <DockPanel Grid.Column="0" LastChildFill="False">
+            <Button DockPanel.Dock="Top" Content="Load" Click="LoadButton_Click" Height="100"/>
+            <Button DockPanel.Dock="Bottom" Content="-" Click="MinusButton_Click" Height="100"/>
+            <Rectangle Height="1" DockPanel.Dock="Bottom"/>
+            <Button DockPanel.Dock="Bottom" Content="+" Click="PlusButton_Click" Height="100"/>
+        </DockPanel>
+        
         <imageutilities:ZoomImage x:Name="MainImage" Grid.Column="1"/>
+        
         <ListView x:Name="Images" ItemsSource="{Binding PhotosHandler.Photos}" SelectionChanged="Images_SelectionChanged" Grid.Column="2">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                        <Image Width="200" Height="200" Source="{Binding Path}"/>
+                    <Image Width="200" Height="200" Source="{Binding Path}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
