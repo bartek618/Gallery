@@ -14,13 +14,13 @@ namespace GalleryClassLibrary.Tests
         {
             PhotosHandler photosHandler = new PhotosHandler();
 
-            string[] paths = new string[] { "1", "2", "3", "4", "5" };
+            string[] paths = new string[] { "1.jpg", "2.png", "3.txt", "4.exe", "5" };
 
             photosHandler.LoadPhotos(paths);
 
-            Assert.Equal(5, photosHandler.Photos.Count);
+            Assert.Equal(2, photosHandler.Photos.Count);
 
-            for (int i = 0; i < paths.Length; i++)
+            for (int i = 0; i < photosHandler.Photos.Count; i++)
             {
                 Assert.Equal(paths[i], photosHandler.Photos[i].Path);
             }

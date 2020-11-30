@@ -22,7 +22,7 @@
             <Button DockPanel.Dock="Bottom" Content="+" Click="PlusButton_Click" Height="100"/>
         </DockPanel>
         
-        <imageutilities:ZoomImage x:Name="MainImage" Grid.Column="1"/>
+        <imageutilities:ZoomImage x:Name="MainImage" Grid.Column="1" Margin="10"/>
         
         <ListView x:Name="Images" ItemsSource="{Binding PhotosHandler.Photos}" SelectionChanged="Images_SelectionChanged" Grid.Column="2">
             <ListView.ItemTemplate>
