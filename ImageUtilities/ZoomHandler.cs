@@ -46,6 +46,7 @@ namespace ImageUtilities
         }
         private double TranslateX
         {
+            get { return _translateTransform.X; }
             set
             {
                 double MaxTranslation = (_border.ActualWidth + _image.ActualWidth * ScaleX) / 2 - 50;
@@ -61,6 +62,7 @@ namespace ImageUtilities
         }
         private double TranslateY
         {
+            get { return _translateTransform.Y; }
             set
             {
                 double MaxTranslation = (_border.ActualHeight + _image.ActualHeight * ScaleY) / 2 - 50;
@@ -92,6 +94,8 @@ namespace ImageUtilities
         {
             ScaleX *= zoomCoefficient;
             ScaleY *= zoomCoefficient;
+            TranslateX *= zoomCoefficient;
+            TranslateY *= zoomCoefficient;
 
         }
         public void ResetZoom()
